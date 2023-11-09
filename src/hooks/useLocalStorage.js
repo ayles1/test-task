@@ -1,4 +1,4 @@
-import {Dispatch, SetStateAction, useCallback, useState, useRef, useLayoutEffect} from 'react';
+import {useCallback, useState, useRef, useLayoutEffect} from 'react';
 
 
 const useLocalStorage = (

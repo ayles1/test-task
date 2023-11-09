@@ -1,13 +1,12 @@
-import {useId, useState} from 'react'
+import {useState} from 'react'
 
 import useLocalStorage from "./hooks/useLocalStorage.js";
 import {Box, Button, TextField} from "@mui/material";
-import {Todo} from "./components/Todo";
+import {Todo} from "./components";
 
 function App() {
     const [todos, setTodos, remove] = useLocalStorage("todos", [])
     const [inputValue, setInputValue] = useState("")
-
 
 
     const handleAdd = (text, completed) => {
@@ -15,10 +14,9 @@ function App() {
 
         if (todos) {
 
-            setTodos([...todos, {text, completed,id}])
-        }
-        else{
-            setTodos([{text, completed,id}])
+            setTodos([...todos, {text, completed, id}])
+        } else {
+            setTodos([{text, completed, id}])
         }
     }
     const handleComplete = (todo) => {
@@ -30,13 +28,13 @@ function App() {
         })
         setTodos(newTodos)
     }
-    console.log(todos, 'todo')
+
 
     return (
         <div>
-
             {todos && todos.map((todo, index) => {
-                return <Todo key={todo.id} id={todo.id} text={todo.text} completed={todo.completed} setCompleted={handleComplete} />
+                return <Todo key={todo.id} id={todo.id} text={todo.text} completed={todo.completed}
+                             setCompleted={handleComplete}/>
             })}
             <Box sx={{display: 'flex'}}>
 
