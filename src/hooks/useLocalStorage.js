@@ -4,20 +4,14 @@ import {useCallback, useState, useRef, useLayoutEffect} from 'react';
 const useLocalStorage = (
     key,
     initialValue,
-    options
 ) => {
 
 
-
-    const deserializer = options
-        ? options.raw
-            ? (value) => value
-            : options.deserializer
-        : JSON.parse;
+    const deserializer = JSON.parse;
 
     const initializer = useRef((key) => {
         try {
-            const serializer = options ? (options.raw ? String : options.serializer) : JSON.stringify;
+            const serializer = JSON.stringify;
 
             const localStorageValue = localStorage.getItem(key);
             if (localStorageValue !== null) {
@@ -31,7 +25,7 @@ const useLocalStorage = (
         }
     });
 
-    const [state, setState] = useState  (() => initializer.current(key));
+    const [state, setState] = useState(() => initializer.current(key));
 
 
     useLayoutEffect(() => setState(initializer.current(key)), [key]);
@@ -43,13 +37,10 @@ const useLocalStorage = (
                 if (typeof newState === 'undefined') return;
                 let value;
 
-                if (options)
-                    if (options.raw)
-                        if (typeof newState === 'string') value = newState;
-                        else value = JSON.stringify(newState);
-                    else if (options.serializer) value = options.serializer(newState);
-                    else value = JSON.stringify(newState);
+
+                if (typeof newState === 'string') value = newState;
                 else value = JSON.stringify(newState);
+
 
                 localStorage.setItem(key, value);
                 setState(deserializer(value));

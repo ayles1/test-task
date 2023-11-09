@@ -6,7 +6,7 @@ import {Todo} from "./components";
 
 function App() {
     const [todos, setTodos, remove] = useLocalStorage("todos", [])
-    const [inputValue, setInputValue] = useState("")
+    const [inputValue, setInputValue,removeInputValue] = useLocalStorage("input value",'')
 
 
     const handleAdd = (text, completed) => {
@@ -28,7 +28,14 @@ function App() {
         })
         setTodos(newTodos)
     }
+    const handleInputChange = (e)=> {
+        setInputValue(e.target.value)
+    }
 
+    const handleCleanup = () => {
+        remove()
+        removeInputValue()
+    }
 
     return (
         <div>
@@ -40,11 +47,10 @@ function App() {
 
                 <Button variant={'contained'} onClick={() => handleAdd(inputValue, false)}>Добавить</Button>
                 <div>
-
-                    <TextField value={inputValue} onChange={(e) => setInputValue(e.target.value)}/>
+                    <TextField value={inputValue} onChange={handleInputChange}/>
                 </div>
             </Box>
-            <Button onClick={() => remove()}>Очистить</Button>
+            <Button onClick={handleCleanup}>Очистить</Button>
         </div>
     )
 }
