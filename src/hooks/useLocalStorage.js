@@ -7,9 +7,7 @@ const useLocalStorage = (
     options
 ) => {
 
-    if (!key) {
-        throw new Error('useLocalStorage key may not be falsy');
-    }
+
 
     const deserializer = options
         ? options.raw
@@ -33,7 +31,8 @@ const useLocalStorage = (
         }
     });
 
-    const [state, setState] = useState < T | undefined > (() => initializer.current(key));
+    const [state, setState] = useState  (() => initializer.current(key));
+
 
     useLayoutEffect(() => setState(initializer.current(key)), [key]);
 
